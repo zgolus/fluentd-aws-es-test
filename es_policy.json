@@ -1,0 +1,33 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::AWS_ACCOUNT_ID:user/fluentd"
+        ]
+      },
+      "Action": [
+        "es:*"
+      ],
+      "Resource": "arn:aws:es:eu-west-1:AWS_ACCOUNT_ID:domain/DOMAIN_NAME/*"
+    },
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": "es:*",
+      "Condition": {
+        "IpAddress": {
+          "aws:SourceIp": [
+            "1.2.3.4/24"
+          ]
+        }
+      },
+      "Resource": "arn:aws:es:eu-west-1:AWS_ACCOUNT_ID:domain/DOMAIN_NAME/*"
+    }
+  ]
+}

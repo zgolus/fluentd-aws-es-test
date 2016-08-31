@@ -1,0 +1,26 @@
+version: "2"
+
+services:
+
+  fluentd:
+    image: fluent/fluentd:latest
+    ports:
+      - "24224:24224"
+    volumes:
+      - ./fluentd/etc:/fluentd/etc
+    command: /fluentd/etc/start.sh
+    networks:
+      - lognet
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    logging:
+      driver: fluentd
+    networks:
+      - lognet
+
+networks:
+  lognet:
+    driver: bridge
